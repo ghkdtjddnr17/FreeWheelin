@@ -4,6 +4,7 @@ import { useProblemStore } from "../../store/useProbleamStore"
 import ProblemCard from "../common/ProblemCard"
 import { useProblemActions } from "../../hooks/useProblemActions"
 import { CustomScrollbar } from "../common/CustomScrollbar"
+import type { Problem } from "../../api/Problems"
 
 
 const SimilarProblemPanel = () => {
@@ -26,7 +27,7 @@ const SimilarProblemPanel = () => {
                             <div className="w-full overflow-y-auto overflow-x-hidden box-border">
 
                                 {
-                                    similarProblems.map((item, i) => {
+                                    similarProblems.map((item: Problem, i: number) => {
                                         return <ProblemCard
                                             key={item.id}
                                             problemItem={item}

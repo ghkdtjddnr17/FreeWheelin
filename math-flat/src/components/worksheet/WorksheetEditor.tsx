@@ -7,6 +7,7 @@ import { CustomScrollbar } from "../common/CustomScrollbar";
 import { getLevelCountsArr } from "../../utils/problemStats";
 import { useProblemActions } from "../../hooks/useProblemActions";
 import clsx from "clsx";
+import type { Problem } from "../../api/Problems";
 
 const WorksheetEditor = () => {
     const { data: problemInfo } = useProblems()
@@ -24,11 +25,11 @@ const WorksheetEditor = () => {
         <div className="xl:w-[712px] h-full bg-[#5C5C5C] rounded-xl p-6 text-white lg:w-[480px]">
             {/* 상단 헤더 */}
             <div className="text-base font-bold mb-6">학습지 상세 편집</div>
-            <CustomScrollbar height="calc(100% - 98px)">
 
-                {
-                    problems.length > 0 ? problems?.map((item, i) => {
-                        return <div className="w-full overflow-y-auto overflow-x-hidden box-border ">
+            {
+                problems.length < 0 ? problems?.map((item: Problem, i: number) => {
+                    return <CustomScrollbar height="calc(100% - 98px)">
+                        <div className="w-full overflow-y-auto overflow-x-hidden box-border ">
                             <ProblemCard
                                 key={item.id}
                                 problemItem={item}
@@ -45,14 +46,16 @@ const WorksheetEditor = () => {
                                     onClick: () => remove(item)
                                 }} />
                         </div>
-                    }) : <div className="h-full flex flex-1 items-center justify-center">
-                        <div className="text-center text-sm leading-relaxed">
-                            학습지 문제 수가 없습니다. <br />
-                            다음단계로 넘어가기 위해 문제를 추가해주세요.
-                        </div>
+                    </CustomScrollbar>
+
+                }) : <div className="h-full flex flex-1 items-center justify-center">
+                    <div className="text-center text-sm leading-relaxed">
+                        학습지 문제 수가 없습니다. <br />
+                        다음단계로 넘어가기 위해 문제를 추가해주세요.
                     </div>
-                }
-            </CustomScrollbar>
+                </div>
+            }
+
             <div className="rounded-b-xl px-4 py-2 text-[15px] flex justify-end text-[#E0E0E0] mt-3">
                 {
                     problems.length > 0 && <>
