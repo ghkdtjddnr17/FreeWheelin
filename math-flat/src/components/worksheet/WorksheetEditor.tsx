@@ -25,37 +25,39 @@ const WorksheetEditor = () => {
         <div className="xl:w-[712px] h-full bg-[#5C5C5C] rounded-xl p-6 text-white lg:w-[480px]">
             {/* 상단 헤더 */}
             <div className="text-base font-bold mb-6">학습지 상세 편집</div>
-
             {
-                problems.length < 0 ? problems?.map((item: Problem, i: number) => {
-                    return <CustomScrollbar height="calc(100% - 98px)">
-                        <div className="w-full overflow-y-auto overflow-x-hidden box-border ">
-                            <ProblemCard
-                                key={item.id}
-                                problemItem={item}
-                                index={i + 1}
-                                selected={activeId === item.id}
-                                primaryAction={{
-                                    label: "유사문제",
-                                    icon: "ic_plus",
-                                    onClick: () => fetchSimilar(item.id)
-                                }}
-                                secondaryAction={{
-                                    label: "삭제",
-                                    icon: "ic_remove",
-                                    onClick: () => remove(item)
-                                }} />
+                problems.length > 0 ? <CustomScrollbar height="calc(100% - 98px)">
+                    {
+                        problems?.map((item: Problem, i: number) => {
+                            return <div className="w-full overflow-y-auto overflow-x-hidden box-border ">
+                                <ProblemCard
+                                    key={item.id}
+                                    problemItem={item}
+                                    index={i + 1}
+                                    selected={activeId === item.id}
+                                    primaryAction={{
+                                        label: "유사문제",
+                                        icon: "ic_plus",
+                                        onClick: () => fetchSimilar(item.id)
+                                    }}
+                                    secondaryAction={{
+                                        label: "삭제",
+                                        icon: "ic_remove",
+                                        onClick: () => remove(item)
+                                    }} />
+                            </div>
+                        })
+                    }
+                </CustomScrollbar> :
+                    <div className="h-[calc(100%_-_98px)]">
+                        <div className="h-full flex flex-1 items-center justify-center">
+                            <div className="text-center text-sm leading-relaxed">
+                                학습지 문제 수가 없습니다. <br />
+                                다음단계로 넘어가기 위해 문제를 추가해주세요.
+                            </div>
                         </div>
-                    </CustomScrollbar>
-
-                }) : <div className="h-full flex flex-1 items-center justify-center">
-                    <div className="text-center text-sm leading-relaxed">
-                        학습지 문제 수가 없습니다. <br />
-                        다음단계로 넘어가기 위해 문제를 추가해주세요.
                     </div>
-                </div>
             }
-
             <div className="rounded-b-xl px-4 py-2 text-[15px] flex justify-end text-[#E0E0E0] mt-3">
                 {
                     problems.length > 0 && <>
